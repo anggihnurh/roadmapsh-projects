@@ -1,38 +1,38 @@
 # 📄 Single Page CV
 
-Selamat datang di branch **`single-page-cv`**! 👋
+Welcome to the **`single-page-cv`** branch! 👋
 
-Project ini merupakan project pertama dengan tingkat *Beginner* yang dikerjakan berdasarkan ide dari alur pembelajaran [roadmap.sh/frontend](https://roadmap.sh/frontend). 
+This is the first beginner-level project I've built, inspired by the [roadmap.sh/frontend](https://roadmap.sh/frontend) roadmap.
 
-Tujuan utama dari project ini adalah untuk mempraktikkan materi fundamental HTML dengan membangun sebuah halaman *Curriculum Vitae* (CV) atau *resume* statis.
+The main goal of this project is to practice HTML fundamentals by building a static Curriculum Vitae (CV) / resume page.
 
-## 🎯 Tujuan Pembelajaran Project Ini
+## 🎯 What I Learned
 
-Melalui project ini, beberapa konsep dasar yang diuji dan dipraktikkan meliputi:
-- Memahami struktur dasar sebuah dokumen HTML5 (`<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`).
-- Menggunakan *semantic tags* HTML yang sesuai dengan maknanya (misalnya: `<header>`, `<main>`, `<section>`, `<footer>`).
-- Mengimplementasikan berbagai elemen HTML seperti teks/paragraf (`<p>`), judul/headings (`<h1>` hingga `<h6>`), daftar (`<ul>`, `<ol>`, `<li>`), dan hyperlink (`<a>`).
-- Menyusun data menggunakan tabel HTML (`<table>`, `<tr>`, `<th>`, `<td>`).
-- Memasukkan elemen media seperti gambar (`<img>`) beserta atribut pendukungnya (`alt`, `src`).
-- Mengelola *metadata* dasar dan *favicon* pada tag `<head>`.
+Through this project, I got to practice and test key HTML5 concepts, including:
+- Understanding the core structure of an HTML5 document (`<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`).
+- Using semantic HTML tags appropriately (like `<header>`, `<main>`, `<section>`, and `<footer>`).
+- Working with essential HTML elements: text/paragraphs (`<p>`), headings (`<h1>` to `<h6>`), lists (`<ul>`, `<ol>`, `<li>`), and hyperlinks (`<a>`).
+- Structuring data using tables (`<table>`, `<tr>`, `<th>`, `<td>`).
+- Embedding media elements like images (`<img>`) alongside support attributes (`alt`, `src`).
+- Managing basic metadata and the site favicon inside the `<head>` tag.
 
-## 🛠️ Teknologi yang Digunakan
+## 🛠️ Tech Stack
 
-Project ini difokuskan pada penguasaan dasar, sehingga hanya menggunakan:
+To keep the focus entirely on the core basics, this project uses:
 - **HTML5** (Pure HTML)
 
-## 🚀 Cara Melihat Hasil
+## 🚀 How to View the Project
 
-Karena project ini murni terdiri dari file HTML statis, cara melihat hasilnya sangatlah mudah:
+Since this project is pure static HTML, running it is as simple as it gets:
 
-1. Pastikan Anda sudah clone repository dan berada di branch `single-page-cv`.
-2. Buka folder repository ini di komputer Anda.
-3. Klik ganda (double-click) pada file `index.html`, atau seret (*drag*) file tersebut ke *web browser* (Google Chrome, Firefox, Safari, dll).
-4. *(Opsional)* Jika Anda menggunakan teks editor seperti VS Code, Anda bisa menginstal ekstensi **Live Server** dan membukanya langsung dari sana.
+1. Clone the repository and make sure you're on the `single-page-cv` branch.
+2. Open the project folder on your computer.
+3. Double-click the `index.html` file, or simply drag and drop it into your favorite web browser (Chrome, Firefox, Safari, Edge, etc.).
+4. *(Optional)* If you are using VS Code, you can install the **Live Server** extension and launch it directly from your editor.
 
-## 📝 Catatan Tambahan
+## 📝 A Quick Note
 
-Sesuai dengan komitmen belajar, kode dalam project ini ditulis seratus persen secara mandiri. AI tidak digunakan untuk menyusun kerangka atau meng-generate *source code*, melainkan hanya dimanfaatkan sebagai alat *code review* untuk memberikan *feedback* terkait aksesibilitas (*accessibility*) dan *best practices* dalam penulisan HTML.
+As part of my commitment to learning, 100% of this codebase was written manually from scratch. I didn't use AI to write or scaffold the code; instead, I only leveraged it as a code reviewer to get feedback on accessibility (a11y) and HTML best practices.
 
 ---
-[Kembali ke struktur utama (`main`)](https://github.com/anggihnurh/roadmapsh-projects/tree/main)
+[Back to main branch (`main`)](https://github.com/anggihnurh/roadmapsh-projects/tree/main)
