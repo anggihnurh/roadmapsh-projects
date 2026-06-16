@@ -1,52 +1,52 @@
 # 🗺️ Roadmap.sh Frontend Projects
 
-Selamat datang di repository **Roadmap.sh Frontend Projects**! 🚀
+Welcome to the **Roadmap.sh Frontend Projects** repository! 🚀
 
-Repository ini berisi sekumpulan project frontend yang saya kerjakan berdasarkan ide project dari [roadmap.sh/frontend](https://roadmap.sh/frontend). Project-project yang ada di sini bervariasi mulai dari tingkat *beginner* hingga *advanced*.
+This repo is a collection of frontend projects I've built based on project ideas from [roadmap.sh/frontend](https://roadmap.sh/frontend). The projects here range from beginner to advanced levels.
 
-## 🎯 Tujuan & Pendekatan Belajar
+## 🎯 Learning Approach & Goals
 
-Tujuan utama dari inisiatif ini adalah untuk benar-benar mengasah kembali pemahaman dan keterampilan saya dari tahap *fundamental* hingga *advanced*. 
+The main goal here is to really sharpen my skills and understanding, moving step-by-step from core fundamentals all the way to advanced concepts.
 
-Oleh karena itu, saya menerapkan komitmen berikut dalam pengerjaannya:
-- 🚫 **Tidak menggunakan AI untuk menulis/men-generate kode project**. Saya akan menulis setiap baris kode secara mandiri.
-- 🤖 **AI hanya akan saya gunakan secara eksklusif untuk *code review***. Tujuannya adalah untuk mendapatkan *feedback*, mendeteksi kemungkinan *bug*, mempelajari *best practices*, dan meningkatkan kualitas kode secara keseluruhan.
+To make sure I get the most out of this, I'm following a few personal guidelines:
+- 🚫 **No AI-generated code**. I write every single line of code myself to lock in the fundamentals.
+- 🤖 **AI is strictly for code reviews**. I only use AI to get feedback, spot potential bugs, learn best practices, and improve the overall code quality.
 
-## 📌 Struktur Repository
+## 📌 Repo Structure
 
-Untuk menjaga repository tetap rapi dan terisolasi per project, setiap project dibuat dan dikembangkan pada **branch yang berbeda-beda**. 
+To keep things neat and ensure each project is isolated, everything is built on **its own separate branch**.
 
-Branch default `main` (yang sedang Anda lihat saat ini) **hanya berisi file `README.md`** sebagai dokumentasi dan navigasi utama ke berbagai project.
+The default `main` branch (which you're looking at right now) **only contains this `README.md`** to serve as a central hub for documentation and navigation.
 
-### 🗂️ Daftar Project & Branch
+### 🗂️ Project & Branch List
 
-Berikut adalah daftar project yang ada di dalam repository ini. Untuk melihat source code lengkap dari sebuah project, silakan pindah (*checkout*) ke branch yang sesuai:
+Here's the list of projects completed so far. To check out the code for a specific project, simply switch to its corresponding branch:
 
-| Level | Nama Project | Nama Branch | Keterangan |
+| Level | Project | Branch Name | Notes |
 | :---: | :--- | :--- | :--- |
-| 🟢 Beginner | Single Page CV | [`single-page-cv`](../../tree/single-page-cv) | Project pertama: Membuat halaman CV statis. |
-| ... | *Project lainnya menyusul* | ... | ... |
+| 🟢 Beginner | Single Page CV | [`single-page-cv`](../../tree/single-page-cv) | First project: Building a static CV page. |
+| ... | *More projects coming soon* | ... | ... |
 
-*(Daftar ini akan terus diupdate seiring berjalannya progres belajar).*
+*(I'll keep updating this list as I progress).*
 
-## 🚀 Cara Menjalankan/Melihat Kode Project
+## 🚀 How to Run & View the Code
 
-1. Clone repository ini ke komputer Anda:
+1. Clone this repository to your local machine:
    ```bash
    git clone https://github.com/username/roadmapsh-projects.git
    cd roadmapsh-projects
    ```
 
-2. Lihat semua branch project yang tersedia:
+2. View all available project branches:
    ```bash
    git branch -a
    ```
 
-3. Pindah ke branch project yang ingin dilihat:
+3. Switch to the branch of the project you want to check out:
    ```bash
-   git checkout <nama-branch>
-   # contoh: git checkout single-page-cv
+   git checkout <branch-name>
+   # example: git checkout single-page-cv
    ```
 
 ---
-Semangat coding! 💻✨
+Happy coding! 💻✨
