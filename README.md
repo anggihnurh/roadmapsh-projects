@@ -36,3 +36,5 @@ As part of my commitment to learning, 100% of this codebase was written manually
 
 ---
 [Back to main branch (`main`)](https://github.com/anggihnurh/roadmapsh-projects/tree/main)
+
+https://roadmap.sh/projects/single-page-cv
