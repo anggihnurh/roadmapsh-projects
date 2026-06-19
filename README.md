@@ -1,54 +1,45 @@
-# 🗺️ Roadmap.sh Frontend Projects
+# 🌐 Basic HTML Website
 
-Welcome to the **Roadmap.sh Frontend Projects** repository! 🚀
+Welcome to the **`basic-html-website`** branch! 👋
 
-This repo is a collection of frontend projects I've built based on project ideas from [roadmap.sh/frontend](https://roadmap.sh/frontend). The projects here range from beginner to advanced levels.
+This is a beginner-level project I've built, inspired by the [roadmap.sh/frontend](https://roadmap.sh/frontend) roadmap.
 
-## 🎯 Learning Approach & Goals
+The main goal of this project is to structure a multi-page website using semantic HTML, focusing strictly on the document structure rather than styling.
 
-The main goal here is to really sharpen my skills and understanding, moving step-by-step from core fundamentals all the way to advanced concepts.
+## 🎯 What I Learned
 
-To make sure I get the most out of this, I'm following a few personal guidelines:
-- 🚫 **No AI-generated code**. I write every single line of code myself to lock in the fundamentals.
-- 🤖 **AI is strictly for code reviews**. I only use AI to get feedback, spot potential bugs, learn best practices, and improve the overall code quality.
+Through this project, I got to practice and test key HTML5 concepts, including:
+- Creating multiple HTML pages (Homepage, Projects, Articles, Contact) and linking them together with a consistent navigation bar.
+- Structuring the website semantically using tags like `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, and `<footer>`.
+- Adding essential SEO meta tags such as descriptions and keywords within the `<head>` to improve search engine visibility.
+- Organizing the HTML structure logically so that it can be easily styled later with CSS.
+- Building an interactive form for the Contact page, utilizing input fields like `text` and `email`, text areas for messages, and linking them properly with `<label>` tags.
 
-## 📌 Repo Structure
+## 📐 Mockup Design
 
-To keep things neat and ensure each project is isolated, everything is built on **its own separate branch**.
+Here is the mockup design provided by roadmap.sh:
 
-The default `main` branch (which you're looking at right now) **only contains this `README.md`** to serve as a central hub for documentation and navigation.
+![Basic HTML Website Mockup](https://assets.roadmap.sh/guest/portfolio-design-83lku.png)
 
-### 🗂️ Project & Branch List
+## 🛠️ Tech Stack
 
-Here's the list of projects completed so far. To check out the code for a specific project, simply switch to its corresponding branch:
+To keep the focus entirely on the core basics, this project uses:
+- **HTML5** (Pure HTML)
 
-| Level | Project | Branch Name | Notes |
-| :---: | :--- | :--- | :--- |
-| 🟢 Beginner | Single Page CV | [`single-page-cv`](../../tree/single-page-cv) | First project: Building a static CV page. |
-| ... | *More projects coming soon* | ... | ... |
+## 🚀 How to View the Project
 
-*(I'll keep updating this list as I progress).*
+Since this project is pure static HTML, running it is as simple as it gets:
 
-## 🚀 How to Run & View the Code
+1. Clone the repository and make sure you're on the `basic-html-website` branch.
+2. Open the project folder on your computer.
+3. Double-click the `index.html` file (or any other page like `projects.html`, `articles.html`, `contact.html`), or simply drag and drop it into your favorite web browser (Chrome, Firefox, Safari, Edge, etc.).
+4. *(Optional)* If you are using VS Code, you can install the **Live Server** extension and launch it directly from your editor.
 
-1. Clone this repository to your local machine:
-   ```bash
-   git clone https://github.com/username/roadmapsh-projects.git
-   cd roadmapsh-projects
-   ```
+## 📝 A Quick Note
 
-2. View all available project branches:
-   ```bash
-   git branch -a
-   ```
-
-3. Switch to the branch of the project you want to check out:
-   ```bash
-   git checkout <branch-name>
-   # example: git checkout single-page-cv
-   ```
+As part of my commitment to learning, 100% of this codebase was written manually from scratch. I didn't use AI to write or scaffold the code; instead, I only leveraged it as a code reviewer to get feedback on accessibility (a11y) and HTML best practices.
 
 ---
-Happy coding! 💻✨
+[Back to main branch (`main`)](https://github.com/anggihnurh/roadmapsh-projects/tree/main)
 
-https://roadmap.sh/projects/single-page-cv
+https://roadmap.sh/projects/basic-html-website
