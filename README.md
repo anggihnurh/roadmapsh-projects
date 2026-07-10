@@ -52,3 +52,4 @@ Here's the list of projects completed so far. To check out the code for a specif
 Happy coding! 💻✨
 
 https://roadmap.sh/projects/single-page-cv
+https://roadmap.sh/projects/basic-html-website
