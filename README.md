@@ -1,45 +1,29 @@
-# 🌐 Basic HTML Website
+In this project, we will be making a browser based quiz. The app will present users with a series of multiple-choice questions and after each question, the app will provide immediate feedback on whether the selected answer is correct or incorrect.
 
-Welcome to the **`basic-html-website`** branch! 👋
+## Requirements
+As a developer, feel free to come up with a JSON based quiz the questions as you see fit.
 
-This is a beginner-level project I've built, inspired by the [roadmap.sh/frontend](https://roadmap.sh/frontend) roadmap.
+The user will be initially presented with a "start" button and some detail about the quiz
 
-The main goal of this project is to structure a multi-page website using semantic HTML, focusing strictly on the document structure rather than styling.
+When the user presses start they're presented with the first multiple choice question.
 
-## 🎯 What I Learned
+The questions are to be presented as cards with the answers being buttons on the card.
 
-Through this project, I got to practice and test key HTML5 concepts, including:
-- Creating multiple HTML pages (Homepage, Projects, Articles, Contact) and linking them together with a consistent navigation bar.
-- Structuring the website semantically using tags like `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, and `<footer>`.
-- Adding essential SEO meta tags such as descriptions and keywords within the `<head>` to improve search engine visibility.
-- Organizing the HTML structure logically so that it can be easily styled later with CSS.
-- Building an interactive form for the Contact page, utilizing input fields like `text` and `email`, text areas for messages, and linking them properly with `<label>` tags.
+When the user selects an answer, the answer buttons are to turn red or green depending on the result. It should also show what the correct answer was.
 
-## 📐 Mockup Design
+If the user answers correctly, a score is to be incremented.
 
-Here is the mockup design provided by roadmap.sh:
+At the end of the quiz, the user is presented with a final score and all of the results.
 
-![Basic HTML Website Mockup](https://assets.roadmap.sh/guest/portfolio-design-83lku.png)
+Optionally add a timer of 1 minute to each question, if user doesn't attempt the question in that time, it should skip to next question and score should be decremented by 1.
 
-## 🛠️ Tech Stack
+You can use any frontend framework such as React, Vue or Angular and some state management library to handle the state.
 
-To keep the focus entirely on the core basics, this project uses:
-- **HTML5** (Pure HTML)
+---
 
-## 🚀 How to View the Project
-
-Since this project is pure static HTML, running it is as simple as it gets:
-
-1. Clone the repository and make sure you're on the `basic-html-website` branch.
-2. Open the project folder on your computer.
-3. Double-click the `index.html` file (or any other page like `projects.html`, `articles.html`, `contact.html`), or simply drag and drop it into your favorite web browser (Chrome, Firefox, Safari, Edge, etc.).
-4. *(Optional)* If you are using VS Code, you can install the **Live Server** extension and launch it directly from your editor.
-
-## 📝 A Quick Note
-
-As part of my commitment to learning, 100% of this codebase was written manually from scratch. I didn't use AI to write or scaffold the code; instead, I only leveraged it as a code reviewer to get feedback on accessibility (a11y) and HTML best practices.
+After finishing this project, you will have a good understanding of managing complex states and building an app of moderate complexity using any frontend framework.
 
 ---
 [Back to main branch (`main`)](https://github.com/anggihnurh/roadmapsh-projects/tree/main)
 
-https://roadmap.sh/projects/basic-html-website
+https://roadmap.sh/projects/quiz-app
