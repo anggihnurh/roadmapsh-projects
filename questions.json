@@ -1,0 +1,243 @@
+{
+  "metadata": {
+    "schemaVersion": 1,
+    "id": "frontend-fundamentals",
+    "title": "Frontend Quiz",
+    "description": "Kuis sederhana tentang dasar-dasar frontend development.",
+    "category": "frontend-development",
+    "locale": "id-ID",
+    "version": 1
+  },
+  "questions": [
+    {
+      "id": "q-001",
+      "question": "Apa kepanjangan dari HTML?",
+      "options": [
+        {
+          "id": "a",
+          "text": "HyperText Markup Language"
+        },
+        {
+          "id": "b",
+          "text": "HighText Machine Language"
+        },
+        {
+          "id": "c",
+          "text": "HyperTool Multi Language"
+        },
+        {
+          "id": "d",
+          "text": "Home Tool Markup Language"
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "id": "q-002",
+      "question": "Apa fungsi utama CSS dalam pengembangan web?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mengelola database aplikasi"
+        },
+        {
+          "id": "b",
+          "text": "Mengatur tampilan dan tata letak halaman"
+        },
+        {
+          "id": "c",
+          "text": "Menjalankan server web"
+        },
+        {
+          "id": "d",
+          "text": "Menyimpan data pengguna"
+        }
+      ],
+      "correctOptionId": "b"
+    },
+    {
+      "id": "q-003",
+      "question": "Method array JavaScript mana yang menghasilkan array baru tanpa mengubah array asal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "push()"
+        },
+        {
+          "id": "b",
+          "text": "pop()"
+        },
+        {
+          "id": "c",
+          "text": "map()"
+        },
+        {
+          "id": "d",
+          "text": "sort()"
+        }
+      ],
+      "correctOptionId": "c"
+    },
+    {
+      "id": "q-004",
+      "question": "Elemen HTML semantik mana yang digunakan untuk konten navigasi utama?",
+      "options": [
+        {
+          "id": "a",
+          "text": "<section>"
+        },
+        {
+          "id": "b",
+          "text": "<aside>"
+        },
+        {
+          "id": "c",
+          "text": "<header>"
+        },
+        {
+          "id": "d",
+          "text": "<nav>"
+        }
+      ],
+      "correctOptionId": "d"
+    },
+    {
+      "id": "q-005",
+      "question": "Apa tujuan penggunaan media query pada CSS?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menyesuaikan gaya berdasarkan karakteristik perangkat atau viewport"
+        },
+        {
+          "id": "b",
+          "text": "Mengambil data dari REST API"
+        },
+        {
+          "id": "c",
+          "text": "Memvalidasi formulir HTML"
+        },
+        {
+          "id": "d",
+          "text": "Mengubah CSS menjadi JavaScript"
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "id": "q-006",
+      "question": "Apa yang akan dikembalikan oleh perbandingan JavaScript 5 === \"5\"?",
+      "options": [
+        {
+          "id": "a",
+          "text": "true, karena nilainya sama"
+        },
+        {
+          "id": "b",
+          "text": "false, karena tipe datanya berbeda"
+        },
+        {
+          "id": "c",
+          "text": "undefined"
+        },
+        {
+          "id": "d",
+          "text": "Terjadi syntax error"
+        }
+      ],
+      "correctOptionId": "b"
+    },
+    {
+      "id": "q-007",
+      "question": "Atribut HTML apa yang menghubungkan elemen <label> dengan sebuah input?",
+      "options": [
+        {
+          "id": "a",
+          "text": "name"
+        },
+        {
+          "id": "b",
+          "text": "target"
+        },
+        {
+          "id": "c",
+          "text": "for"
+        },
+        {
+          "id": "d",
+          "text": "action"
+        }
+      ],
+      "correctOptionId": "c"
+    },
+    {
+      "id": "q-008",
+      "question": "Web Storage API mana yang mempertahankan data setelah browser ditutup dan dibuka kembali?",
+      "options": [
+        {
+          "id": "a",
+          "text": "sessionStorage"
+        },
+        {
+          "id": "b",
+          "text": "MemoryStorage"
+        },
+        {
+          "id": "c",
+          "text": "TempStorage"
+        },
+        {
+          "id": "d",
+          "text": "localStorage"
+        }
+      ],
+      "correctOptionId": "d"
+    },
+    {
+      "id": "q-009",
+      "question": "Apa fungsi preventDefault() pada sebuah event di browser?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mencegah perilaku bawaan browser untuk event tersebut"
+        },
+        {
+          "id": "b",
+          "text": "Menghapus seluruh event listener"
+        },
+        {
+          "id": "c",
+          "text": "Menghentikan JavaScript secara permanen"
+        },
+        {
+          "id": "d",
+          "text": "Memuat ulang halaman secara otomatis"
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "id": "q-010",
+      "question": "Status HTTP mana yang menunjukkan bahwa resource yang diminta tidak ditemukan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "200"
+        },
+        {
+          "id": "b",
+          "text": "404"
+        },
+        {
+          "id": "c",
+          "text": "500"
+        },
+        {
+          "id": "d",
+          "text": "301"
+        }
+      ],
+      "correctOptionId": "b"
+    }
+  ]
+}
