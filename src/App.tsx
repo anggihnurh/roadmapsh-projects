@@ -104,17 +104,31 @@ function App() {
     setCurrentQuestionIndex(0);
   };
 
-  if (quizStatus === "intro") return <OnBoarding onStart={handleStartQuiz} />;
+  if (quizStatus === "intro") {
+    return (
+      <main className="app-shell">
+        <OnBoarding onStart={handleStartQuiz} />
+      </main>
+    );
+  }
 
-  if (quizStatus === "complete") return <QuizResult onReplay={handleReplay} />;
+  if (quizStatus === "complete") {
+    return (
+      <main className="app-shell">
+        <QuizResult onReplay={handleReplay} />
+      </main>
+    );
+  }
 
   return (
-    <Quiz
-      onAnswer={handleSelectOpt}
-      result={result}
-      currentQuestionIndex={currentQuestionIndex}
-      onNext={handleNextQuestion}
-    />
+    <main className="app-shell">
+      <Quiz
+        onAnswer={handleSelectOpt}
+        result={result}
+        currentQuestionIndex={currentQuestionIndex}
+        onNext={handleNextQuestion}
+      />
+    </main>
   );
 }
 

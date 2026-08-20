@@ -28,40 +28,57 @@ export default function QuizResult({ onReplay }: { onReplay: () => void }) {
   const incorrect = parsed.filter((p) => p.status === "incorrect").length;
 
   return (
-    <div>
+    <section className="quiz-card result-card">
+      <span className="eyebrow">KUIS SELESAI</span>
       <h1>Hasil Quiz</h1>
-      <p>Berikut hasil kuis anda</p>
-      <p>
-        Poin Anda: {point}/{parsed.length}
-      </p>
-      <p>Jawaban Benar:{point}</p>
-      <p>Jawaban Salah: {incorrect}</p>
+      <p className="lead">Berikut hasil kuis Anda.</p>
 
-      <ol>
+      <div className="score-card">
+        <span>Poin Anda</span>
+        <strong>
+          {point}<small>/{parsed.length}</small>
+        </strong>
+      </div>
+      <div className="result-summary">
+        <div>
+          <span>Jawaban benar</span>
+          <strong>{point}</strong>
+        </div>
+        <div>
+          <span>Jawaban salah</span>
+          <strong>{incorrect}</strong>
+        </div>
+      </div>
+
+      <ol className="answer-review">
         {questionAndResults.map((p) => (
           <li key={p.questionId}>
-            <p>{p.question}</p>
-            <ol type="a" style={{ marginLeft: -24 }}>
+            <h2>{p.question}</h2>
+            <ol type="a">
               {p.options.map((o) => (
                 <li
                   key={o.id}
-                  style={{
-                    marginBottom: 8,
-                    color: o.isCorrect
-                      ? "green"
+                  className={
+                    o.isCorrect
+                      ? "review-option is-correct"
                       : o.isSelected
-                        ? "red"
-                        : "black",
-                  }}
+                        ? "review-option is-incorrect"
+                        : "review-option"
+                  }
                 >
-                  {o.text} {o.isCorrect ? "✔" : o.isSelected ? "✗" : ""}
+                  <span>{o.text}</span>
+                  <span aria-hidden="true">
+                    {o.isCorrect ? "✓" : o.isSelected ? "×" : ""}
+                  </span>
                 </li>
               ))}
             </ol>
           </li>
         ))}
       </ol>
-      <button onClick={onReplay}>Kerjakan Ulang</button>
-    </div>
+      <button className="button button-primary" onClick={onReplay}>
+        Kerjakan Ulang
+      </button>
+    </section>
   );
 }

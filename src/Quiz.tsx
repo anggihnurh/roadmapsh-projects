@@ -30,51 +30,58 @@ export default function Quiz({
   onNext,
 }: QuizProps) {
   return (
-    <div className="flex flex-col items-start gap-6">
+    <section className="quiz-card question-card">
       {questions.map((q, index) => {
         if (index !== currentQuestionIndex) return null;
 
         return (
-          <div key={q.id} className="flex flex-col gap-6">
-            <p>
-              Pertanyaan <b>{index + 1}</b> dari {questions.length}
-            </p>
-            <div className="flex flex-col gap-3">
-              <p className="text-lg font-semibold">{q.question}</p>
-              <div className="flex flex-col gap-2 ml-2">
+          <div key={q.id} className="question-content">
+            <div className="question-progress">
+              <span>
+                Pertanyaan <strong>{index + 1}</strong> dari {questions.length}
+              </span>
+              <span>{Math.round(((index + 1) / questions.length) * 100)}%</span>
+            </div>
+            <div className="progress-track" aria-hidden="true">
+              <span
+                style={{ width: `${((index + 1) / questions.length) * 100}%` }}
+              />
+            </div>
+            <div className="question-body">
+              <h1>{q.question}</h1>
+              <div className="option-list">
                 {q.options.map((o) => {
                   const isAnswered = !!result?.selectedOptionId;
                   const isSelectedOpt = o.id === result?.selectedOptionId;
                   const isResultCorrect = result?.status === "correct";
                   const isCorrectOpt = isAnswered && o.id === q.correctOptionId;
+                  const optionState = isSelectedOpt
+                    ? isResultCorrect
+                      ? "is-correct"
+                      : "is-incorrect"
+                    : isCorrectOpt
+                      ? "is-correct"
+                      : "";
 
                   return (
                     <button
+                      key={o.id}
                       onClick={() => {
                         // if (isAnswered) return;
 
                         onAnswer(q, o.id);
                       }}
-                      className="p-0 bg-none border-none w-max cursor-pointer"
+                      className={`quiz-option ${optionState}`}
                     >
-                      <span
-                        style={{
-                          color: isSelectedOpt
-                            ? isResultCorrect
-                              ? "green"
-                              : "red"
-                            : isCorrectOpt
-                              ? "green"
-                              : "black",
-                        }}
-                      >
-                        <b>{o.id}.</b> {o.text}{" "}
+                      <span className="option-label">{o.id}</span>
+                      <span className="option-text">{o.text}</span>
+                      <span className="option-mark" aria-hidden="true">
                         {isSelectedOpt
                           ? isResultCorrect
-                            ? "✔"
-                            : "✗"
+                            ? "✓"
+                            : "×"
                           : isCorrectOpt
-                            ? "✔"
+                            ? "✓"
                             : ""}
                       </span>
                     </button>
@@ -88,12 +95,12 @@ export default function Quiz({
       <button
         onClick={onNext}
         disabled={!result?.selectedOptionId}
-        className="py-2 px-4 bg-blue-500 text-white rounded-lg disabled:bg-gray-400 not-disabled:cursor-pointer"
+        className="button button-primary next-button"
       >
         {currentQuestionIndex === lastQuestionIndex
           ? "Lihat Hasil"
           : "Selanjutnya"}
       </button>
-    </div>
+    </section>
   );
 }
