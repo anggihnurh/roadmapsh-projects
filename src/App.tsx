@@ -1,110 +1,100 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import quizData from "../questions.json";
 import OnBoarding from "./Onboarding";
 import Quiz, { type Question } from "./Quiz";
 import QuizResult from "./QuizResult";
+import { AnswerStatus, initialSession, QuizSession, SessionStatus } from "./hook/useQuizSession";
 
 const lastQuestionIndex = quizData.questions.length - 1;
 
-export interface QuizResult {
+export interface QuizAnswer {
   questionId: string;
   selectedOptionId: string | null;
   correctOptionId: string;
-  status: "correct" | "incorrect";
+  status: AnswerStatus
 }
 
-function App() {
-  const [quizStatus, setQuizStatus] = useState(() => {
-    const sessionStatus = window.sessionStorage.getItem("quiz_status");
-    return sessionStatus ?? "intro";
-  });
+interface AppProps {
+  session: QuizSession
+  setSession: (value: QuizSession) => void
+}
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => {
-    const idxQuestionSession = window.sessionStorage.getItem("idx_question");
+function App({ session, setSession }: AppProps) {
+  const { answers, currentQuestionIdx, status } = session
+  const [answer, setAnswer] = useState<QuizAnswer>()
 
-    if (!idxQuestionSession) return 0;
+  useEffect(() => {
+    if (currentQuestionIdx === null) return
 
-    const parsedIdx = Number(idxQuestionSession);
+    const current = quizData.questions[currentQuestionIdx]
+    const answer = answers.find(a => a.questionId === current.id)
 
-    if (Number.isNaN(parsedIdx) || parsedIdx > lastQuestionIndex) return 0;
+    if (!answer) return
 
-    return parsedIdx;
-  });
+    setAnswer({
+      correctOptionId: current.correctOptionId,
+      questionId: current.id,
+      selectedOptionId: answer.selectedOptionId,
+      status: current.correctOptionId === answer.selectedOptionId ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT
+    })
 
-  const [result, setResult] = useState<QuizResult | null>(() => {
-    const results = window.sessionStorage.getItem("quiz_results");
-    if (!results) return null;
+  }, [session])
 
-    const parsed: QuizResult[] = JSON.parse(results);
+  if (!session) return null
 
-    if (parsed?.length === 0) return null;
-
-    return JSON.parse(results)[currentQuestionIndex];
-  });
 
   const handleStartQuiz = () => {
-    setQuizStatus("in_progress");
-    window.sessionStorage.setItem("quiz_status", "in_progress");
+    setSession({ answers: [], currentQuestionIdx: 0, status: SessionStatus.IN_PROGRESS })
   };
 
-  const handleQuizSession = (res: QuizResult) => {
-    console.log("res =>", res);
-
-    const existing = window.sessionStorage.getItem("quiz_results");
-    console.log("existing =>", existing);
-
-    const parsed: QuizResult[] = existing ? JSON.parse(existing) : [];
-
-    const hasAnswered = parsed.some((p) => p.questionId === res.questionId);
-    console.log("hasAnswered ->", hasAnswered);
+  const handleAnswer = (value: Question, selectedOptionId: string) => {
+    const currentAnswers = answers.length ? answers : []
+    const hasAnswered = currentAnswers.some(a => a.questionId === value.id)
 
     if (hasAnswered) {
-      alert("Anda sudah menjawab pertanyaan ini!");
-      return;
+      toast("Pertanyaan ini sudah Anda jawab.")
+      return
     }
 
-    const results: QuizResult[] = [...parsed, res];
+    const isCorrect = value.correctOptionId === selectedOptionId
 
-    window.sessionStorage.setItem("quiz_results", JSON.stringify(results));
-    window.sessionStorage.setItem("quiz_status", quizStatus);
-    window.sessionStorage.setItem("idx_question", String(currentQuestionIndex));
-  };
+    if (isCorrect) {
+      toast.success("Jawaban Anda Benar!")
+    } else {
+      toast.error('Jawaban Anda Salah!')
+    }
 
-  const handleSelectOpt = (value: Question, selectedOptionId: string) => {
-    const res = {
+    setAnswer({
       selectedOptionId,
-      correctOptionId: value.correctOptionId,
       questionId: value.id,
-      status:
-        selectedOptionId === value.correctOptionId ? "correct" : "incorrect",
-    } satisfies QuizResult;
+      correctOptionId: value.correctOptionId,
+      status: isCorrect ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT
+    })
 
-    setResult(res);
-    handleQuizSession(res);
+    currentAnswers.push({ questionId: value.id, selectedOptionId })
+    setSession({ ...session, answers: currentAnswers })
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex === lastQuestionIndex) {
-      setQuizStatus("complete");
-      window.sessionStorage.setItem("quiz_status", "complete");
+    if (currentQuestionIdx === null) return
+
+    if (currentQuestionIdx === lastQuestionIndex) {
+      setSession({ ...session, status: SessionStatus.COMPLETE })
+      return
     }
 
-    setResult(null);
-    setCurrentQuestionIndex((prev) => prev + 1);
-    window.sessionStorage.setItem(
-      "idx_question",
-      String(currentQuestionIndex + 1),
-    );
+    setAnswer(undefined)
+    setSession({ ...session, currentQuestionIdx: currentQuestionIdx + 1 })
   };
 
   const handleReplay = () => {
-    window.sessionStorage.clear();
-    setQuizStatus("intro");
-    setResult(null);
-    setCurrentQuestionIndex(0);
+    setAnswer(undefined)
+    setSession(initialSession)
   };
 
-  if (quizStatus === "intro") {
+
+  if (status === SessionStatus.INTRO) {
     return (
       <main className="app-shell">
         <OnBoarding onStart={handleStartQuiz} />
@@ -112,10 +102,10 @@ function App() {
     );
   }
 
-  if (quizStatus === "complete") {
+  if (status === SessionStatus.COMPLETE) {
     return (
       <main className="app-shell">
-        <QuizResult onReplay={handleReplay} />
+        <QuizResult answers={session.answers} onReplay={handleReplay} />
       </main>
     );
   }
@@ -123,9 +113,9 @@ function App() {
   return (
     <main className="app-shell">
       <Quiz
-        onAnswer={handleSelectOpt}
-        result={result}
-        currentQuestionIndex={currentQuestionIndex}
+        onAnswer={handleAnswer}
+        answer={answer}
+        currentQuestionIndex={currentQuestionIdx}
         onNext={handleNextQuestion}
       />
     </main>

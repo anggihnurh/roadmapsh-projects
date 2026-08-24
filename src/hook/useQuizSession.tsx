@@ -1,33 +1,44 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-interface Answer {
-  questionId: string;
-  selectedOption: string;
+export enum SessionStatus {
+  INTRO = 'intro',
+  IN_PROGRESS = 'in_progress',
+  COMPLETE = 'complete'
 }
 
-interface QuizSession {
-  status: "intro" | "in_progress" | "complete";
+export enum AnswerStatus {
+  CORRECT = 'correct',
+  INCORRECT = 'incorrect'
+}
+
+export interface Answer {
+  questionId: string;
+  selectedOptionId: string;
+}
+
+export interface QuizSession {
+  status: SessionStatus
   currentQuestionIdx: number | null;
   answers: Answer[];
 }
 
 const QUIZ_SESSION_KEY = "quiz_session";
 
+export const initialSession: QuizSession = {
+  status: SessionStatus.INTRO,
+  currentQuestionIdx: null,
+  answers: [],
+};
+
 export default function useQuizSession() {
-  const [quizSession, setQuizSession] = useState<QuizSession | null>();
+  const [session, setSession] = useState<QuizSession | null>();
 
   useEffect(() => {
     try {
       const session = window.sessionStorage.getItem(QUIZ_SESSION_KEY);
 
-      const initialSession: QuizSession = {
-        status: "intro",
-        currentQuestionIdx: null,
-        answers: [],
-      };
-
       if (!session) {
-        setQuizSession(initialSession);
+        setSession(initialSession);
         window.sessionStorage.setItem(
           QUIZ_SESSION_KEY,
           JSON.stringify(initialSession),
@@ -36,13 +47,33 @@ export default function useQuizSession() {
       }
 
       const parsed: QuizSession = JSON.parse(session);
-      setQuizSession(parsed);
+      setSession(parsed);
     } catch (error) {
       console.log("Cannot fetch user session", error);
       window.sessionStorage.removeItem(QUIZ_SESSION_KEY);
-      setQuizSession(null);
+      setSession(null);
     }
   }, []);
 
-  return quizSession;
+  useEffect(() => {
+    if (!session) return
+
+    window.sessionStorage.setItem(QUIZ_SESSION_KEY, JSON.stringify(session))
+  }, [session])
+
+  return { session, setSession }
+}
+
+interface SessionGuardProps {
+  children: (session: QuizSession, setSession: (value: QuizSession) => void) => React.ReactNode
+  fallback: React.ReactNode
+}
+
+
+export function SessionGuard({ children, fallback }: SessionGuardProps) {
+  const { session, setSession } = useQuizSession()
+
+  if (!session) return fallback
+
+  return children(session, setSession)
 }

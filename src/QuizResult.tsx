@@ -1,31 +1,33 @@
-import type { QuizResult } from "./App";
 import quizData from "../questions.json";
+import { Answer, AnswerStatus } from "./hook";
 
 const { questions } = quizData;
 
-export default function QuizResult({ onReplay }: { onReplay: () => void }) {
-  const results = window.sessionStorage.getItem("quiz_results");
+interface QuizResultProps {
+  answers: Answer[]
+  onReplay: () => void
+}
 
-  if (!results) return null;
+export default function QuizResult({ answers, onReplay }: QuizResultProps) {
 
-  const parsed = JSON.parse(results) as QuizResult[];
-
-  const questionAndResults = questions.map((q) => {
-    const baz = parsed.find((p) => p.questionId === q.id);
+  const results = questions.map((q) => {
+    const baz = answers.find((p) => p.questionId === q.id);
 
     return {
       question: q.question,
+      questionId: q.id,
+      status: baz?.selectedOptionId === q.correctOptionId ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT,
       options: q.options.map((o) => ({
         ...o,
-        isCorrect: baz?.correctOptionId === o.id,
+        isCorrectAnswer: q.correctOptionId === o.id,
         isSelected: baz?.selectedOptionId === o.id,
       })),
-      ...baz,
     };
   });
 
-  const point = parsed.filter((p) => p.status === "correct").length;
-  const incorrect = parsed.filter((p) => p.status === "incorrect").length;
+
+  const point = results.filter((p) => p.status === AnswerStatus.CORRECT).length;
+  const incorrect = results.filter((p) => p.status === AnswerStatus.INCORRECT).length;
 
   return (
     <section className="quiz-card result-card">
@@ -36,7 +38,7 @@ export default function QuizResult({ onReplay }: { onReplay: () => void }) {
       <div className="score-card">
         <span>Poin Anda</span>
         <strong>
-          {point}<small>/{parsed.length}</small>
+          {point}<small>/{answers.length}</small>
         </strong>
       </div>
       <div className="result-summary">
@@ -51,7 +53,7 @@ export default function QuizResult({ onReplay }: { onReplay: () => void }) {
       </div>
 
       <ol className="answer-review">
-        {questionAndResults.map((p) => (
+        {results.map((p) => (
           <li key={p.questionId}>
             <h2>{p.question}</h2>
             <ol type="a">
@@ -59,7 +61,7 @@ export default function QuizResult({ onReplay }: { onReplay: () => void }) {
                 <li
                   key={o.id}
                   className={
-                    o.isCorrect
+                    o.isCorrectAnswer
                       ? "review-option is-correct"
                       : o.isSelected
                         ? "review-option is-incorrect"
@@ -68,7 +70,7 @@ export default function QuizResult({ onReplay }: { onReplay: () => void }) {
                 >
                   <span>{o.text}</span>
                   <span aria-hidden="true">
-                    {o.isCorrect ? "✓" : o.isSelected ? "×" : ""}
+                    {o.isCorrectAnswer ? "✓" : o.isSelected ? "×" : ""}
                   </span>
                 </li>
               ))}

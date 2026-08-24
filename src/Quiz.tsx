@@ -1,5 +1,6 @@
 import quizData from "../questions.json";
-import type { QuizResult } from "./App";
+import { QuizAnswer } from "./App";
+import { AnswerStatus } from "./hook";
 
 const { questions } = quizData;
 const lastQuestionIndex = questions.length - 1;
@@ -17,18 +18,21 @@ export interface Question {
 }
 
 interface QuizProps {
-  currentQuestionIndex: number;
-  result: QuizResult | null;
+  currentQuestionIndex: number | null;
+  answer?: QuizAnswer
   onAnswer: (value: Question, selectedOptionId: string) => void;
   onNext: () => void;
 }
 
 export default function Quiz({
   currentQuestionIndex,
-  result,
+  answer,
   onAnswer,
   onNext,
 }: QuizProps) {
+
+  if (currentQuestionIndex === null) return null
+
   return (
     <section className="quiz-card question-card">
       {questions.map((q, index) => {
@@ -51,9 +55,9 @@ export default function Quiz({
               <h1>{q.question}</h1>
               <div className="option-list">
                 {q.options.map((o) => {
-                  const isAnswered = !!result?.selectedOptionId;
-                  const isSelectedOpt = o.id === result?.selectedOptionId;
-                  const isResultCorrect = result?.status === "correct";
+                  const isAnswered = !!answer?.selectedOptionId;
+                  const isSelectedOpt = o.id === answer?.selectedOptionId;
+                  const isResultCorrect = answer?.status === AnswerStatus.CORRECT;
                   const isCorrectOpt = isAnswered && o.id === q.correctOptionId;
                   const optionState = isSelectedOpt
                     ? isResultCorrect
@@ -66,11 +70,7 @@ export default function Quiz({
                   return (
                     <button
                       key={o.id}
-                      onClick={() => {
-                        // if (isAnswered) return;
-
-                        onAnswer(q, o.id);
-                      }}
+                      onClick={() => onAnswer(q, o.id)}
                       className={`quiz-option ${optionState}`}
                     >
                       <span className="option-label">{o.id}</span>
@@ -94,7 +94,7 @@ export default function Quiz({
       })}
       <button
         onClick={onNext}
-        disabled={!result?.selectedOptionId}
+        disabled={!answer?.selectedOptionId}
         className="button button-primary next-button"
       >
         {currentQuestionIndex === lastQuestionIndex
