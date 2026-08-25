@@ -9,8 +9,8 @@ This repo is a collection of frontend projects I've built based on project ideas
 The main goal here is to really sharpen my skills and understanding, moving step-by-step from core fundamentals all the way to advanced concepts.
 
 To make sure I get the most out of this, I'm following a few personal guidelines:
-- 🚫 **No AI-generated code**. I write every single line of code myself to lock in the fundamentals.
-- 🤖 **AI is strictly for code reviews**. I only use AI to get feedback, spot potential bugs, learn best practices, and improve the overall code quality.
+- 🤖 **Styling & Boilerplate**: AI is used to streamline styling and generate repetitive boilerplate code. All core logic is written entirely by hand.
+- 🔍 **Technical Reviews Only**: AI serves as a code reviewer, providing professional feedback and guidance without offering direct code solutions.
 
 ## 📌 Repo Structure
 
