@@ -25,6 +25,8 @@ Here's the list of projects completed so far. To check out the code for a specif
 | Level | Project | Branch Name | Notes |
 | :---: | :--- | :--- | :--- |
 | 🟢 Beginner | Single Page CV | [`single-page-cv`](../../tree/single-page-cv) | First project: Building a static CV page. |
+| 🟢 Beginner | Basic HTML Website | [`basic-html-website`](../../tree/basic-html-website) | Building a multi-page site using semantic HTML. |
+| 🟡 Intermediate | Quiz App | [`quiz-app`](../../tree/quiz-app) | An interactive quiz app with dynamic questions and state management. |
 | ... | *More projects coming soon* | ... | ... |
 
 *(I'll keep updating this list as I progress).*
@@ -53,3 +55,4 @@ Happy coding! 💻✨
 
 https://roadmap.sh/projects/single-page-cv
 https://roadmap.sh/projects/basic-html-website
+https://roadmap.sh/projects/quiz-app
