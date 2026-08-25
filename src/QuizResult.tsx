@@ -1,5 +1,5 @@
 import quizData from "../questions.json";
-import { Answer, AnswerStatus } from "./hook";
+import { Answer, AnswerStatus } from "./types";
 
 const { questions } = quizData;
 
@@ -11,20 +11,24 @@ interface QuizResultProps {
 export default function QuizResult({ answers, onReplay }: QuizResultProps) {
 
   const results = questions.map((q) => {
-    const baz = answers.find((p) => p.questionId === q.id);
+    const answer = answers.find((p) => p.questionId === q.id);
+
+    const correctOpt = q.options.find(o => o.id === q.correctOptionId)
+    const selectedOpt = q.options.find(o => o.id === answer?.selectedOptionId)
 
     return {
+      id: q.id,
       question: q.question,
-      questionId: q.id,
-      status: baz?.selectedOptionId === q.correctOptionId ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT,
+      correctOpt,
+      selectedOpt,
+      status: answer?.selectedOptionId === q.correctOptionId ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT,
       options: q.options.map((o) => ({
         ...o,
         isCorrectAnswer: q.correctOptionId === o.id,
-        isSelected: baz?.selectedOptionId === o.id,
+        isSelected: answer?.selectedOptionId === o.id,
       })),
     };
   });
-
 
   const point = results.filter((p) => p.status === AnswerStatus.CORRECT).length;
   const incorrect = results.filter((p) => p.status === AnswerStatus.INCORRECT).length;
@@ -38,7 +42,7 @@ export default function QuizResult({ answers, onReplay }: QuizResultProps) {
       <div className="score-card">
         <span>Poin Anda</span>
         <strong>
-          {point}<small>/{answers.length}</small>
+          {point}<small>/{questions.length}</small>
         </strong>
       </div>
       <div className="result-summary">
@@ -54,7 +58,7 @@ export default function QuizResult({ answers, onReplay }: QuizResultProps) {
 
       <ol className="answer-review">
         {results.map((p) => (
-          <li key={p.questionId}>
+          <li key={p.id}>
             <h2>{p.question}</h2>
             <ol type="a">
               {p.options.map((o) => (
@@ -68,18 +72,44 @@ export default function QuizResult({ answers, onReplay }: QuizResultProps) {
                         : "review-option"
                   }
                 >
-                  <span>{o.text}</span>
+                  <div className="review-option-main">
+                    <span className="review-option-label">{o.id}.</span>
+                    <span>{o.text}</span>
+                  </div>
                   <span aria-hidden="true">
                     {o.isCorrectAnswer ? "✓" : o.isSelected ? "×" : ""}
                   </span>
                 </li>
               ))}
             </ol>
+            <div className="review-answer-summary">
+              <div
+                className={`review-answer-item ${p.status === AnswerStatus.CORRECT
+                  ? "is-correct"
+                  : "is-incorrect"
+                  }`}
+              >
+                <span className="review-answer-label">Jawaban Anda:</span>
+                <span className="review-answer-value">
+                  {p.selectedOpt
+                    ? `${p.selectedOpt.id}. ${p.selectedOpt.text}`
+                    : "-"}
+                </span>
+              </div>
+              <div className="review-answer-item is-correct-answer">
+                <span className="review-answer-label">Jawaban Yang Benar:</span>
+                <span className="review-answer-value">
+                  {p.correctOpt
+                    ? `${p.correctOpt.id}. ${p.correctOpt.text}`
+                    : "-"}
+                </span>
+              </div>
+            </div>
           </li>
         ))}
       </ol>
       <button className="button button-primary" onClick={onReplay}>
-        Kerjakan Ulang
+        Ulangi Kuis
       </button>
     </section>
   );

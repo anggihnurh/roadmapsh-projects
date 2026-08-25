@@ -1,19 +1,14 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import quizData from "../questions.json";
+import { initialSession } from "./hook";
 import OnBoarding from "./Onboarding";
-import Quiz, { type Question } from "./Quiz";
+import Quiz from "./Quiz";
 import QuizResult from "./QuizResult";
-import { AnswerStatus, initialSession, QuizSession, SessionStatus } from "./hook/useQuizSession";
+import { AnswerStatus, Question, QuizAnswer, QuizSession, SessionStatus } from "./types";
 
 const lastQuestionIndex = quizData.questions.length - 1;
 
-export interface QuizAnswer {
-  questionId: string;
-  selectedOptionId: string | null;
-  correctOptionId: string;
-  status: AnswerStatus
-}
 
 interface AppProps {
   session: QuizSession
@@ -22,35 +17,30 @@ interface AppProps {
 
 function App({ session, setSession }: AppProps) {
   const { answers, currentQuestionIdx, status } = session
-  const [answer, setAnswer] = useState<QuizAnswer>()
 
-  useEffect(() => {
+  const answer = useMemo(() => {
     if (currentQuestionIdx === null) return
 
     const current = quizData.questions[currentQuestionIdx]
-    const answer = answers.find(a => a.questionId === current.id)
+    const foundAnswer = answers.find(a => a.questionId === current.id)
 
-    if (!answer) return
+    if (!foundAnswer) return undefined
 
-    setAnswer({
+    return {
       correctOptionId: current.correctOptionId,
       questionId: current.id,
-      selectedOptionId: answer.selectedOptionId,
-      status: current.correctOptionId === answer.selectedOptionId ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT
-    })
+      selectedOptionId: foundAnswer.selectedOptionId,
+      status: current.correctOptionId === foundAnswer.selectedOptionId ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT
+    } satisfies QuizAnswer
 
-  }, [session])
-
-  if (!session) return null
-
+  }, [currentQuestionIdx, answers])
 
   const handleStartQuiz = () => {
     setSession({ answers: [], currentQuestionIdx: 0, status: SessionStatus.IN_PROGRESS })
   };
 
   const handleAnswer = (value: Question, selectedOptionId: string) => {
-    const currentAnswers = answers.length ? answers : []
-    const hasAnswered = currentAnswers.some(a => a.questionId === value.id)
+    const hasAnswered = answers.some(a => a.questionId === value.id)
 
     if (hasAnswered) {
       toast("Pertanyaan ini sudah Anda jawab.")
@@ -65,15 +55,8 @@ function App({ session, setSession }: AppProps) {
       toast.error('Jawaban Anda Salah!')
     }
 
-    setAnswer({
-      selectedOptionId,
-      questionId: value.id,
-      correctOptionId: value.correctOptionId,
-      status: isCorrect ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT
-    })
-
-    currentAnswers.push({ questionId: value.id, selectedOptionId })
-    setSession({ ...session, answers: currentAnswers })
+    const updatedAnswers = [...answers, { questionId: value.id, selectedOptionId }]
+    setSession({ ...session, answers: updatedAnswers })
   };
 
   const handleNextQuestion = () => {
@@ -84,12 +67,10 @@ function App({ session, setSession }: AppProps) {
       return
     }
 
-    setAnswer(undefined)
     setSession({ ...session, currentQuestionIdx: currentQuestionIdx + 1 })
   };
 
   const handleReplay = () => {
-    setAnswer(undefined)
     setSession(initialSession)
   };
 

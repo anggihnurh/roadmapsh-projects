@@ -1,26 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { QuizSession, SessionStatus } from "../types";
 
-export enum SessionStatus {
-  INTRO = 'intro',
-  IN_PROGRESS = 'in_progress',
-  COMPLETE = 'complete'
-}
-
-export enum AnswerStatus {
-  CORRECT = 'correct',
-  INCORRECT = 'incorrect'
-}
-
-export interface Answer {
-  questionId: string;
-  selectedOptionId: string;
-}
-
-export interface QuizSession {
-  status: SessionStatus
-  currentQuestionIdx: number | null;
-  answers: Answer[];
-}
 
 const QUIZ_SESSION_KEY = "quiz_session";
 
