@@ -11,25 +11,28 @@ export const initialSession: QuizSession = {
   answers: [],
 };
 
+function setInitialSession() {
+  window.sessionStorage.setItem(
+    QUIZ_SESSION_KEY,
+    JSON.stringify(initialSession),
+  );
+  return initialSession
+}
+
 export default function useQuizSession() {
   const [session, setSession] = useState<QuizSession | null>(() => {
     try {
       const session = window.sessionStorage.getItem(QUIZ_SESSION_KEY);
 
-      if (!session) {
-        window.sessionStorage.setItem(
-          QUIZ_SESSION_KEY,
-          JSON.stringify(initialSession),
-        );
-        return initialSession
-      }
+      if (!session) return setInitialSession()
 
       const parsed = JSON.parse(session);
       const result = QuizSessionSchema(parsed)
 
       if (result instanceof type.errors) {
         console.log('User session broken or invalid: ', result.summary);
-        return initialSession
+        window.sessionStorage.removeItem(QUIZ_SESSION_KEY);
+        return setInitialSession()
       }
 
       return result
