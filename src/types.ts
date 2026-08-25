@@ -1,6 +1,6 @@
 import { type } from "arktype";
 
-export const SessionStatusSchema = type("'intro' | 'in_progress' | 'complete' ")
+export const SessionStatusSchema = type("'intro' | 'in_progress' | 'complete'")
 export type SessionStatus = typeof SessionStatusSchema.infer
 
 export const AnswerStatusSchema = type("'correct'| 'incorrect'")

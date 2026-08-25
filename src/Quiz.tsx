@@ -34,7 +34,7 @@ export default function Quiz({
           </span>
           <span>{Math.round(((currentQuestionIndex + 1) / questions.length) * 100)}%</span>
         </div>
-        <div className="progress-track" aria-hidden="true" role="progressbar" aria-valuenow={progress} aria-valuemin={10} aria-valuemax={100}>
+        <div className="progress-track" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
           <span
             style={{ width: `${progress}%` }}
           />
@@ -59,7 +59,6 @@ export default function Quiz({
                 <button
                   key={o.id}
                   disabled={isAnswered}
-                  aria-disabled
                   onClick={() => onAnswer(question, o.id)}
                   className={`quiz-option ${optionState}`}
                 >
