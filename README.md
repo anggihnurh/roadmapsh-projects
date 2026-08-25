@@ -1,58 +1,31 @@
-# 🗺️ Roadmap.sh Frontend Projects
+# ⛅ Weather Web App
 
-Welcome to the **Roadmap.sh Frontend Projects** repository! 🚀
+A minimal frontend project built with **React**, **Vite**, **TypeScript**, and **Tailwind CSS**.
 
-This repo is a collection of frontend projects I've built based on project ideas from [roadmap.sh/frontend](https://roadmap.sh/frontend). The projects here range from beginner to advanced levels.
+This project is part of my learning journey on frontend development from [roadmap.sh/projects/weather-easy](https://roadmap.sh/projects/weather-easy).
 
-## 🎯 Learning Approach & Goals
+## 🚀 Technologies Used
+- **React 19**
+- **Vite 8**
+- **Tailwind CSS v4**
+- **TypeScript**
 
-The main goal here is to really sharpen my skills and understanding, moving step-by-step from core fundamentals all the way to advanced concepts.
+## 💻 Getting Started
 
-To make sure I get the most out of this, I'm following a few personal guidelines:
-- 🤖 **Styling & Boilerplate**: AI is used to streamline styling and generate repetitive boilerplate code. All core logic is written entirely by hand.
-- 🔍 **Technical Reviews Only**: AI serves as a code reviewer, providing professional feedback and guidance without offering direct code solutions.
-
-## 📌 Repo Structure
-
-To keep things neat and ensure each project is isolated, everything is built on **its own separate branch**.
-
-The default `main` branch (which you're looking at right now) **only contains this `README.md`** to serve as a central hub for documentation and navigation.
-
-### 🗂️ Project & Branch List
-
-Here's the list of projects completed so far. To check out the code for a specific project, simply switch to its corresponding branch:
-
-| Level | Project | Branch Name | Notes |
-| :---: | :--- | :--- | :--- |
-| 🟢 Beginner | Single Page CV | [`single-page-cv`](../../tree/single-page-cv) | First project: Building a static CV page. |
-| 🟢 Beginner | Basic HTML Website | [`basic-html-website`](../../tree/basic-html-website) | Building a multi-page site using semantic HTML. |
-| 🟡 Intermediate | Quiz App | [`quiz-app`](../../tree/quiz-app) | An interactive quiz app with dynamic questions and state management. |
-| ... | *More projects coming soon* | ... | ... |
-
-*(I'll keep updating this list as I progress).*
-
-## 🚀 How to Run & View the Code
-
-1. Clone this repository to your local machine:
+1. Install dependencies:
    ```bash
-   git clone https://github.com/username/roadmapsh-projects.git
-   cd roadmapsh-projects
+   bun install
    ```
 
-2. View all available project branches:
+2. Start the development server:
    ```bash
-   git branch -a
+   bun run dev
    ```
 
-3. Switch to the branch of the project you want to check out:
+3. Build the project:
    ```bash
-   git checkout <branch-name>
-   # example: git checkout single-page-cv
+   bun run build
    ```
 
 ---
-Happy coding! 💻✨
-
-https://roadmap.sh/projects/single-page-cv
-https://roadmap.sh/projects/basic-html-website
-https://roadmap.sh/projects/quiz-app
+[Back to main branch (`main`)](https://github.com/anggihnurh/roadmapsh-projects/tree/main)
