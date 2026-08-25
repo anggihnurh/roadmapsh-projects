@@ -29,7 +29,7 @@ export default function useQuizSession() {
 
       if (result instanceof type.errors) {
         console.log('User session broken or invalid: ', result.summary);
-        return null
+        return initialSession
       }
 
       return result
