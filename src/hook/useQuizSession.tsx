@@ -1,5 +1,6 @@
+import { type } from "arktype";
 import React, { useEffect, useState } from "react";
-import { QuizSession, SessionStatus } from "../types";
+import { QuizSession, QuizSessionSchema } from "../types";
 
 
 const QUIZ_SESSION_KEY = "quiz_session";
@@ -23,8 +24,15 @@ export default function useQuizSession() {
         return initialSession
       }
 
-      const parsed: QuizSession = JSON.parse(session);
-      return parsed
+      const parsed = JSON.parse(session);
+      const result = QuizSessionSchema(parsed)
+
+      if (result instanceof type.errors) {
+        console.log('User session broken or invalid: ', result.summary);
+        return null
+      }
+
+      return result
     } catch (error) {
       console.log("Cannot fetch user session", error);
       window.sessionStorage.removeItem(QUIZ_SESSION_KEY);
