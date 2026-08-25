@@ -1,14 +1,11 @@
-import quizData from "../questions.json";
-import { AnswerStatus, Question, QuizAnswer } from "./types";
-
-const { questions } = quizData;
-const lastQuestionIndex = questions.length - 1;
+import { Question, QuizAnswer } from "./types";
 
 interface QuizProps {
   currentQuestionIndex: number | null;
   answer?: QuizAnswer
   onAnswer: (value: Question, selectedOptionId: string) => void;
   onNext: () => void;
+  questions: Question[]
 }
 
 export default function Quiz({
@@ -16,11 +13,16 @@ export default function Quiz({
   answer,
   onAnswer,
   onNext,
+  questions
 }: QuizProps) {
+
+  const lastQuestionIndex = questions.length - 1;
 
   if (currentQuestionIndex === null) return null
 
   const question = questions[currentQuestionIndex]
+
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100
 
   return (
     <section className="quiz-card question-card">
@@ -32,9 +34,9 @@ export default function Quiz({
           </span>
           <span>{Math.round(((currentQuestionIndex + 1) / questions.length) * 100)}%</span>
         </div>
-        <div className="progress-track" aria-hidden="true">
+        <div className="progress-track" aria-hidden="true" role="progressbar" aria-valuenow={progress} aria-valuemin={10} aria-valuemax={100}>
           <span
-            style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+            style={{ width: `${progress}%` }}
           />
         </div>
         <div className="question-body">
@@ -43,7 +45,7 @@ export default function Quiz({
             {question.options.map((o) => {
               const isAnswered = !!answer?.selectedOptionId;
               const isSelectedOpt = o.id === answer?.selectedOptionId;
-              const isResultCorrect = answer?.status === AnswerStatus.CORRECT;
+              const isResultCorrect = answer?.status === "correct";
               const isCorrectOpt = isAnswered && o.id === question.correctOptionId;
               const optionState = isSelectedOpt
                 ? isResultCorrect
@@ -56,7 +58,6 @@ export default function Quiz({
               return (
                 <button
                   key={o.id}
-                  aria-live="assertive"
                   disabled={isAnswered}
                   aria-disabled
                   onClick={() => onAnswer(question, o.id)}

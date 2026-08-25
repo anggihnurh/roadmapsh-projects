@@ -1,14 +1,12 @@
-import quizData from "../questions.json";
-import { Answer, AnswerStatus } from "./types";
-
-const { questions } = quizData;
+import { Answer, Question } from "./types";
 
 interface QuizResultProps {
   answers: Answer[]
   onReplay: () => void
+  questions: Question[]
 }
 
-export default function QuizResult({ answers, onReplay }: QuizResultProps) {
+export default function QuizResult({ answers, onReplay, questions }: QuizResultProps) {
 
   const results = questions.map((q) => {
     const answer = answers.find((p) => p.questionId === q.id);
@@ -21,7 +19,7 @@ export default function QuizResult({ answers, onReplay }: QuizResultProps) {
       question: q.question,
       correctOpt,
       selectedOpt,
-      status: answer?.selectedOptionId === q.correctOptionId ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT,
+      status: answer?.selectedOptionId === q.correctOptionId ? "correct" : "incorrect",
       options: q.options.map((o) => ({
         ...o,
         isCorrectAnswer: q.correctOptionId === o.id,
@@ -30,8 +28,8 @@ export default function QuizResult({ answers, onReplay }: QuizResultProps) {
     };
   });
 
-  const point = results.filter((p) => p.status === AnswerStatus.CORRECT).length;
-  const incorrect = results.filter((p) => p.status === AnswerStatus.INCORRECT).length;
+  const point = results.filter((p) => p.status === "correct").length;
+  const incorrect = results.filter((p) => p.status === "incorrect").length;
 
   return (
     <section className="quiz-card result-card">
@@ -84,7 +82,7 @@ export default function QuizResult({ answers, onReplay }: QuizResultProps) {
             </ol>
             <div className="review-answer-summary">
               <div
-                className={`review-answer-item ${p.status === AnswerStatus.CORRECT
+                className={`review-answer-item ${p.status === "correct"
                   ? "is-correct"
                   : "is-incorrect"
                   }`}

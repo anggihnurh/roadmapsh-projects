@@ -5,35 +5,32 @@ import { QuizSession, SessionStatus } from "../types";
 const QUIZ_SESSION_KEY = "quiz_session";
 
 export const initialSession: QuizSession = {
-  status: SessionStatus.INTRO,
+  status: "intro",
   currentQuestionIdx: null,
   answers: [],
 };
 
 export default function useQuizSession() {
-  const [session, setSession] = useState<QuizSession | null>();
-
-  useEffect(() => {
+  const [session, setSession] = useState<QuizSession | null>(() => {
     try {
       const session = window.sessionStorage.getItem(QUIZ_SESSION_KEY);
 
       if (!session) {
-        setSession(initialSession);
         window.sessionStorage.setItem(
           QUIZ_SESSION_KEY,
           JSON.stringify(initialSession),
         );
-        return;
+        return initialSession
       }
 
       const parsed: QuizSession = JSON.parse(session);
-      setSession(parsed);
+      return parsed
     } catch (error) {
       console.log("Cannot fetch user session", error);
       window.sessionStorage.removeItem(QUIZ_SESSION_KEY);
-      setSession(null);
+      return null
     }
-  }, []);
+  });
 
   useEffect(() => {
     if (!session) return

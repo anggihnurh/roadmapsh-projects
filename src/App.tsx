@@ -1,13 +1,13 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import toast from "react-hot-toast";
-import quizData from "../questions.json";
+import quizDataset from "../questions.json";
 import { initialSession } from "./hook";
 import OnBoarding from "./Onboarding";
 import Quiz from "./Quiz";
 import QuizResult from "./QuizResult";
-import { AnswerStatus, Question, QuizAnswer, QuizSession, SessionStatus } from "./types";
+import { Question, QuizAnswer, QuizSession } from "./types";
 
-const lastQuestionIndex = quizData.questions.length - 1;
+const lastQuestionIndex = quizDataset.questions.length - 1;
 
 
 interface AppProps {
@@ -21,7 +21,7 @@ function App({ session, setSession }: AppProps) {
   const answer = useMemo(() => {
     if (currentQuestionIdx === null) return
 
-    const current = quizData.questions[currentQuestionIdx]
+    const current = quizDataset.questions[currentQuestionIdx]
     const foundAnswer = answers.find(a => a.questionId === current.id)
 
     if (!foundAnswer) return undefined
@@ -30,13 +30,13 @@ function App({ session, setSession }: AppProps) {
       correctOptionId: current.correctOptionId,
       questionId: current.id,
       selectedOptionId: foundAnswer.selectedOptionId,
-      status: current.correctOptionId === foundAnswer.selectedOptionId ? AnswerStatus.CORRECT : AnswerStatus.INCORRECT
+      status: current.correctOptionId === foundAnswer.selectedOptionId ? "correct" : "incorrect"
     } satisfies QuizAnswer
 
   }, [currentQuestionIdx, answers])
 
   const handleStartQuiz = () => {
-    setSession({ answers: [], currentQuestionIdx: 0, status: SessionStatus.IN_PROGRESS })
+    setSession({ answers: [], currentQuestionIdx: 0, status: "in_progress" })
   };
 
   const handleAnswer = (value: Question, selectedOptionId: string) => {
@@ -63,7 +63,7 @@ function App({ session, setSession }: AppProps) {
     if (currentQuestionIdx === null) return
 
     if (currentQuestionIdx === lastQuestionIndex) {
-      setSession({ ...session, status: SessionStatus.COMPLETE })
+      setSession({ ...session, status: "complete" })
       return
     }
 
@@ -75,18 +75,18 @@ function App({ session, setSession }: AppProps) {
   };
 
 
-  if (status === SessionStatus.INTRO) {
+  if (status === "intro") {
     return (
       <main className="app-shell">
-        <OnBoarding onStart={handleStartQuiz} />
+        <OnBoarding quizDataset={quizDataset} onStart={handleStartQuiz} />
       </main>
     );
   }
 
-  if (status === SessionStatus.COMPLETE) {
+  if (status === "complete") {
     return (
       <main className="app-shell">
-        <QuizResult answers={session.answers} onReplay={handleReplay} />
+        <QuizResult answers={session.answers} onReplay={handleReplay} questions={quizDataset.questions} />
       </main>
     );
   }
@@ -94,9 +94,10 @@ function App({ session, setSession }: AppProps) {
   return (
     <main className="app-shell">
       <Quiz
-        onAnswer={handleAnswer}
         answer={answer}
         currentQuestionIndex={currentQuestionIdx}
+        questions={quizDataset.questions}
+        onAnswer={handleAnswer}
         onNext={handleNextQuestion}
       />
     </main>

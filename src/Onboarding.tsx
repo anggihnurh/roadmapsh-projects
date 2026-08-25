@@ -1,11 +1,12 @@
-import quizData from "../questions.json";
+import { QuizDataset } from "./types";
 
 interface OnBoardingProps {
   onStart: () => void;
+  quizDataset: QuizDataset
 }
 
-export default function OnBoarding({ onStart }: OnBoardingProps) {
-  const { metadata, questions } = quizData;
+export default function OnBoarding({ onStart, quizDataset }: OnBoardingProps) {
+  const { metadata, questions } = quizDataset;
 
   return (
     <section className="quiz-card onboarding-card">
