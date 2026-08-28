@@ -6,5 +6,5 @@ export default [
     ...pluginQuery.configs['flat/recommended'],
 
     // 2. Taruh oxlint paling terakhir untuk mematikan aturan ESLint yang duplikat
-    oxlint.configs['flat/recommended'],
+    ...oxlint.configs['flat/recommended'],
 ]
