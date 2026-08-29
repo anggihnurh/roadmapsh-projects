@@ -1,31 +1,29 @@
+import { Separator } from '@/components/ui/separator'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import { useState } from 'react'
+import exampleData from '../example-data.json'
+import { CurrentWeather } from './components/CurrentWeather'
+import { Header } from './components/Header'
+import type { WeatherData } from './types/weather'
 
 export default function App() {
-  const [city, setCity] = useState('')
+  const [searchInput, setSearchInput] = useState(exampleData.address || 'Kebumen')
+  const weatherData = exampleData as unknown as WeatherData
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center justify-center p-4">
-      <div className="max-w-md w-full bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
-        <h1 className="text-2xl font-bold text-center mb-4 text-blue-400">
-          ⛅ Weather Web App
-        </h1>
-        <p className="text-slate-400 text-sm text-center mb-6">
-          React + Vite + Tailwind CSS (Minimal Template)
-        </p>
-        
-        <div className="flex gap-2">
-          <input
-            type="text"
-            placeholder="Enter city..."
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="flex-1 px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-slate-400"
+    <TooltipProvider delay={200}>
+      <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8 selection:bg-primary selection:text-primary-foreground relative overflow-hidden">
+        <div className="w-full max-w-5xl flex flex-col gap-8">
+          <Header
+            searchInput={searchInput}
+            onSearchChange={setSearchInput}
           />
-          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 rounded-lg font-medium transition">
-            Search
-          </button>
+          <Separator />
+          <main>
+            <CurrentWeather data={weatherData} />
+          </main>
         </div>
       </div>
-    </div>
+    </TooltipProvider>
   )
 }
