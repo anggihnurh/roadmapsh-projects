@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 
 
 interface DetectGeolocationProps {
     onSuccess: (position: GeolocationPosition) => void | Promise<void>
-    onError?: (error: GeolocationPositionError) => void
+    onError?: (errorMessage: string) => void
 }
 
 export function useGeolocation() {
@@ -12,8 +11,7 @@ export function useGeolocation() {
 
     const detect = ({ onSuccess, onError }: DetectGeolocationProps) => {
         if (!navigator.geolocation) {
-            toast.error('Geolocation is not supported by your browser.');
-            setLoading(false);
+            onError?.('Geolocation is not supported by your browser.')
             return;
         }
 
@@ -27,8 +25,7 @@ export function useGeolocation() {
             }
         }, (error) => {
             setLoading(false)
-            toast.error(error.message)
-            onError?.(error)
+            onError?.(error.message)
         })
     }
 
