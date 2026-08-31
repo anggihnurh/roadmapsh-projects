@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import type { WeatherData } from '../types/weather'
 import { LocationBar } from './LocationBar'
 import { WeatherHeroInfo } from './WeatherHeroInfo'
@@ -10,6 +10,7 @@ import {
   toCelsius,
   toKmPerHour,
   getWindDirection,
+  getUvLevel,
   formatTime,
 } from '@/lib/weather-utils'
 import {
@@ -30,31 +31,32 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data }) => {
   const [unit, setUnit] = useState<'C' | 'F'>('C')
   const { currentConditions, resolvedAddress, timezone, description } = data
 
-  const isCelsius = unit === 'C'
-  const displayTemp = isCelsius
-    ? Math.round(toCelsius(currentConditions.temp))
-    : Math.round(currentConditions.temp)
-  const displayFeelsLike = isCelsius
-    ? Math.round(toCelsius(currentConditions.feelslike))
-    : Math.round(currentConditions.feelslike)
-  const displayDewPt = isCelsius
-    ? Math.round(toCelsius(currentConditions.dew))
-    : Math.round(currentConditions.dew)
-
-  const windMph = currentConditions.windspeed
-  const windKmh = toKmPerHour(windMph).toFixed(1)
-  const windDirCardinal = getWindDirection(currentConditions.winddir)
-
-  const rainLikelihood = Math.round(currentConditions.precipprob)
-
-  const uvLevel =
-    currentConditions.uvindex <= 2
-      ? 'Low'
-      : currentConditions.uvindex <= 5
-      ? 'Moderate'
-      : currentConditions.uvindex <= 7
-      ? 'High'
-      : 'Very High'
+  const {
+    displayTemp,
+    displayFeelsLike,
+    displayDewPt,
+    windKmh,
+    windDirCardinal,
+    rainLikelihood,
+    uvLevel,
+  } = useMemo(() => {
+    const isCelsius = unit === 'C'
+    return {
+      displayTemp: isCelsius
+        ? Math.round(toCelsius(currentConditions.temp))
+        : Math.round(currentConditions.temp),
+      displayFeelsLike: isCelsius
+        ? Math.round(toCelsius(currentConditions.feelslike))
+        : Math.round(currentConditions.feelslike),
+      displayDewPt: isCelsius
+        ? Math.round(toCelsius(currentConditions.dew))
+        : Math.round(currentConditions.dew),
+      windKmh: toKmPerHour(currentConditions.windspeed).toFixed(1),
+      windDirCardinal: getWindDirection(currentConditions.winddir),
+      rainLikelihood: Math.round(currentConditions.precipprob),
+      uvLevel: getUvLevel(currentConditions.uvindex),
+    }
+  }, [currentConditions, unit])
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col gap-6">

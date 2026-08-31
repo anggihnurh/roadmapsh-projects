@@ -8,33 +8,34 @@ import { EmptyState } from './components/EmptyState'
 import { Header } from './components/Header'
 import { WeatherSkeleton } from './components/WeatherSkeleton'
 import { useGeolocation } from './hooks'
-import { reverseGeolocationQueryOptions, useWeathers } from './weathers'
+import { reverseGeolocationQueryOptions, useWeathers } from './services'
 
 const USER_LOCATION_KEY = 'user-location'
 
-function RootLayout() {
-  const [activeLocation, setActiveLocation] = useState(() => {
-    const location = window.localStorage.getItem(USER_LOCATION_KEY)
-    return location ?? ''
-  })
-  const [searchInput, setSearchInput] = useState(() => {
-    const location = window.localStorage.getItem(USER_LOCATION_KEY)
-    return location ?? ''
-  })
+const getLocationFromStorage = () => {
+  const location = window.localStorage.getItem(USER_LOCATION_KEY)
+  return location ?? ''
+}
 
-  const { data, isLoading, isFetching } = useWeathers(activeLocation)
+function RootLayout() {
+  const [activeLocation, setActiveLocation] = useState(getLocationFromStorage)
+  const [searchInput, setSearchInput] = useState(getLocationFromStorage)
+
+  const { data, refetch, isLoading, isFetching } = useWeathers(activeLocation)
   const { detect, loading: isLocating } = useGeolocation()
   const queryClient = useQueryClient()
 
   const isBusy = isLoading || isFetching || isLocating
 
   const handleSearchSubmit = () => {
-    if (searchInput.trim() === '') {
+    const trimmed = searchInput.trim()
+
+    if (trimmed === '') {
       toast.error("Field cannot be empty.")
       return
     }
 
-    setActiveLocation(searchInput)
+    setActiveLocation(trimmed)
   }
 
   const handleSuccessDetectLocation = async (position: GeolocationPosition) => {
@@ -57,11 +58,19 @@ function RootLayout() {
 
   }
 
-  const handleDetectLocation = () => detect({ onSuccess: handleSuccessDetectLocation })
+  const handleDetectLocation = () => {
+    detect({ onSuccess: handleSuccessDetectLocation, onError: (msg) => toast.error(msg) })
+  }
+
+  const handleRefresh = () => refetch()
 
 
   useEffect(() => {
-    window.localStorage.setItem(USER_LOCATION_KEY, activeLocation)
+    const trimmed = activeLocation.trim()
+
+    if (trimmed === '') return
+
+    window.localStorage.setItem(USER_LOCATION_KEY, trimmed)
   }, [activeLocation])
 
   return (
@@ -71,7 +80,7 @@ function RootLayout() {
           searchInput={searchInput}
           onSearchChange={setSearchInput}
           onSearchSubmit={handleSearchSubmit}
-          onRefresh={handleSearchSubmit}
+          onRefresh={handleRefresh}
           onDetectLocation={handleDetectLocation}
         />
         <Separator />

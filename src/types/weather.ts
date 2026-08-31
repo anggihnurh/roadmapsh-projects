@@ -70,6 +70,22 @@ export interface WeatherDay {
   source: string
 }
 
+export interface WeatherAlert {
+  event: string
+  headline: string
+  ends?: string
+  endsEpoch?: number
+  onset?: string
+  onsetEpoch?: number
+  id?: string
+  language?: string
+  link?: string
+  description?: string
+  severity?: string
+  urgency?: string
+  areas?: string
+}
+
 export interface WeatherData {
   queryCost: number
   latitude: number
@@ -80,6 +96,7 @@ export interface WeatherData {
   tzoffset: number
   description: string
   days: WeatherDay[]
-  alerts: unknown[]
+  alerts: WeatherAlert[]
   currentConditions: WeatherCurrentConditions
 }
+
