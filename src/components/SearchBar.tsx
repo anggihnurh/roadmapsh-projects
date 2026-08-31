@@ -7,8 +7,8 @@ import { Search, MapPin, RefreshCw } from 'lucide-react'
 interface SearchBarProps {
   searchInput: string
   onSearchChange: (value: string) => void
-  onSearchSubmit?: () => void
-  onDetectLocation?: () => void
+  onSearchSubmit: () => void
+  onDetectLocation: () => void
   onRefresh?: () => void
 }
 
@@ -21,7 +21,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    onSearchSubmit?.()
+    onSearchSubmit()
   }
 
   return (

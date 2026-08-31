@@ -6,9 +6,9 @@ import { CloudSun } from 'lucide-react'
 interface HeaderProps {
   searchInput: string
   onSearchChange: (value: string) => void
-  onSearchSubmit?: () => void
-  onDetectLocation?: () => void
-  onRefresh?: () => void
+  onSearchSubmit: () => void
+  onDetectLocation: () => void
+  onRefresh: () => void
 }
 
 export const Header: React.FC<HeaderProps> = ({

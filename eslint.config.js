@@ -2,6 +2,7 @@ import pluginQuery from '@tanstack/eslint-plugin-query'
 import oxlint from 'eslint-plugin-oxlint'
 
 export default [
+    { ignores: ['dist/**'] },
     // 1. Jalankan aturan TanStack Query di ESLint
     ...pluginQuery.configs['flat/recommended'],
 
