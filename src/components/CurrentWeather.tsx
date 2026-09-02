@@ -61,7 +61,7 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data }) => {
 
 
   const hours = useMemo(() => {
-    const flattenHours = data.days.flatMap((d) => d.hours)
+    const flattenHours = data.days.flatMap((d) => d.hours ?? [])
     const currentHourIndex = flattenHours.findIndex(f => f.datetimeEpoch === data.currentConditions.datetimeEpoch)
 
     const last24Hours = Math.max(0, currentHourIndex - 24)

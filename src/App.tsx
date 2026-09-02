@@ -11,16 +11,21 @@ import { WeatherSkeleton } from './components/WeatherSkeleton'
 import { useGeolocation } from './hooks'
 import { reverseGeolocationQueryOptions, useWeathers } from './services'
 
-const USER_LOCATION_KEY = 'user-location'
+const USER_STORAGE_KEY = 'user-location'
 
 const getLocationFromStorage = () => {
-  const location = window.localStorage.getItem(USER_LOCATION_KEY)
-  return location ?? ''
+  try {
+    const location = window.localStorage.getItem(USER_STORAGE_KEY)
+    return location ?? ''
+  } catch (error) {
+    console.error(`Error get data from localStorage key "${USER_STORAGE_KEY}":`, error);
+    return ''
+  }
 }
 
 function RootLayout() {
   const [activeLocation, setActiveLocation] = useState(getLocationFromStorage)
-  const [searchInput, setSearchInput] = useState(getLocationFromStorage)
+  const [searchInput, setSearchInput] = useState('')
 
   const { data, refetch, isLoading, isFetching, error } = useWeathers(activeLocation)
   const { detect, loading: isLocating } = useGeolocation()
@@ -66,11 +71,14 @@ function RootLayout() {
 
 
   useEffect(() => {
-    const trimmed = activeLocation.trim()
+    try {
+      const trimmed = activeLocation.trim()
+      if (trimmed === '') return
 
-    if (trimmed === '') return
-
-    window.localStorage.setItem(USER_LOCATION_KEY, trimmed)
+      window.localStorage.setItem(USER_STORAGE_KEY, trimmed)
+    } catch (error) {
+      console.error(`Error setting localStorage key "${USER_STORAGE_KEY}":`, error);
+    }
   }, [activeLocation])
 
 

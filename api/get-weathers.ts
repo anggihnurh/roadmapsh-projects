@@ -1,6 +1,6 @@
-import { type } from "arktype"
-import axios from "axios"
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { type } from "arktype";
+import axios from "axios";
 
 const locationQuerySchema = type('string > 3')
 

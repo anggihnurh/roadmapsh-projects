@@ -1,10 +1,19 @@
-import type { WeatherData } from "@/types/weather";
+import { weatherSchema, type WeatherData } from "@/types/weather";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import apiClient from "./api";
 
 async function fetchWeatherByLocation(location: string) {
-    const res = await axios.get('/api/get-weathers', { params: { location } })
-    return res.data
+    try {
+        const res = await apiClient.get('/get-weathers', {
+            params: { location },
+            schema: weatherSchema
+        })
+
+        return res.data
+
+    } catch (error) {
+        console.error('Failed to get data or data is invalid: ', error);
+    }
 }
 
 export function useWeathers(location: string) {
