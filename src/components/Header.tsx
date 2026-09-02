@@ -1,7 +1,6 @@
-import React from 'react'
-import { Badge } from '@/components/ui/badge'
-import { SearchBar } from './SearchBar'
 import { CloudSun } from 'lucide-react'
+import React from 'react'
+import { SearchBar } from './SearchBar'
 
 interface HeaderProps {
   searchInput: string
@@ -25,12 +24,9 @@ export const Header: React.FC<HeaderProps> = ({
           <CloudSun className="size-5" />
         </div>
         <div className="flex flex-col gap-0.5">
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center">
-              Weather<span className="text-primary">Hub</span>
-            </h1>
-            <Badge variant="secondary">SRS 2.2</Badge>
-          </div>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center">
+            Weather<span className="text-primary">Hub</span>
+          </h1>
           <p className="text-xs text-muted-foreground">
             Current Weather Display & Insights
           </p>

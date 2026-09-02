@@ -20,7 +20,10 @@ export function useGeolocation() {
         navigator.geolocation.getCurrentPosition(async (position) => {
             try {
                 await onSuccess(position)
-            } finally {
+            } catch {
+                onError?.('Error getCurrentPosition success handler.')
+            }
+            finally {
                 setLoading(false)
             }
         }, (error) => {

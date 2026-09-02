@@ -1,27 +1,28 @@
-import React, { useMemo, useState } from 'react'
-import type { WeatherData } from '../types/weather'
-import { LocationBar } from './LocationBar'
-import { WeatherHeroInfo } from './WeatherHeroInfo'
-import { WeatherSummaryBadge } from './WeatherSummaryBadge'
-import { AtmosphericCard } from './AtmosphericCard'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import {
+  formatTime,
+  getUvLevel,
+  getWindDirection,
   toCelsius,
   toKmPerHour,
-  getWindDirection,
-  getUvLevel,
-  formatTime,
 } from '@/lib/weather-utils'
 import {
-  Wind,
   CloudRain,
-  Sun,
   Droplets,
   Gauge,
+  Sun,
   Sunrise,
   Sunset,
+  Wind,
 } from 'lucide-react'
+import React, { useMemo, useState } from 'react'
+import type { WeatherData } from '../types/weather'
+import { AtmosphericCard } from './AtmosphericCard'
+import { HourlyOutlook } from './HourlyOutlook'
+import { LocationBar } from './LocationBar'
+import { WeatherHeroInfo } from './WeatherHeroInfo'
+import { WeatherSummaryBadge } from './WeatherSummaryBadge'
 
 interface CurrentWeatherProps {
   data: WeatherData
@@ -57,6 +58,27 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data }) => {
       uvLevel: getUvLevel(currentConditions.uvindex),
     }
   }, [currentConditions, unit])
+
+
+  const hours = useMemo(() => {
+    const flattenHours = data.days.flatMap((d) => d.hours)
+    const currentHourIndex = flattenHours.findIndex(f => f.datetimeEpoch === data.currentConditions.datetimeEpoch)
+
+    const last24Hours = Math.max(0, currentHourIndex - 24)
+    const next24Hours = Math.min(flattenHours.length, currentHourIndex + 24 + 1)
+    const newArr = flattenHours.slice(last24Hours, next24Hours)
+
+    return newArr.map((d, idx) => {
+      if (idx < 24) {
+        return { ...d, period: 'history', relativeLabel: `${24 - idx}h ago` }
+      } else if (idx === 24) {
+        return { ...d, period: 'now', relativeLabel: 'Now' }
+      } else {
+        return { ...d, period: 'forecast', relativeLabel: `In ${idx - 24}h` }
+      }
+    })
+
+  }, [data])
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col gap-6">
@@ -168,6 +190,8 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data }) => {
           iconColorClass="bg-indigo-500/10 text-indigo-500"
         />
       </div>
+
+      <HourlyOutlook unit={unit} hours={hours} />
     </div>
   )
 }

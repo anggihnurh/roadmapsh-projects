@@ -1,3 +1,8 @@
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat)
+
 export function getWindDirection(deg: number): string {
   const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
   const index = Math.round((deg % 360) / 22.5) % 16
@@ -19,26 +24,10 @@ export function getUvLevel(uvindex: number): 'Low' | 'Moderate' | 'High' | 'Very
   return 'Very High'
 }
 
-export function formatTime(timeStr?: string | null): string {
-  if (!timeStr || typeof timeStr !== 'string') return ''
-  
-  const parts = timeStr.split(':')
-  if (parts.length >= 2) {
-    const hour = parseInt(parts[0], 10)
-    const minute = parts[1]
-    if (!isNaN(hour)) {
-      const ampm = hour >= 12 ? 'PM' : 'AM'
-      const formattedHour = hour % 12 === 0 ? 12 : hour % 12
-      return `${formattedHour}:${minute} ${ampm}`
-    }
-  }
-
-  const dateObj = new Date(timeStr)
-  if (!isNaN(dateObj.getTime())) {
-    return dateObj.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
-  }
-
-  return timeStr
+export function formatTime(timeStr?: string | null, format?: string): string {
+  const defaultFormat = 'hh:mm A'
+  return dayjs(timeStr, 'HH:mm:ss').format(format ?? defaultFormat)
 }
+
 
 

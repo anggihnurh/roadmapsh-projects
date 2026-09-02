@@ -31,6 +31,41 @@ export interface WeatherCurrentConditions {
   moonphase: number
 }
 
+export interface WeatherHour {
+  datetime: string
+  datetimeEpoch: number
+  temp: number
+  feelslike: number
+  humidity: number
+  dew: number
+  precip: number
+  precipprob: number
+  snow: number
+  snowdepth: number
+  preciptype: string[] | null
+  windgust: number | null
+  windspeed: number
+  winddir: number
+  pressure: number
+  visibility: number
+  cloudcover: number
+  solarradiation: number
+  solarenergy: number | null
+  uvindex: number
+  severerisk: number
+  conditions: string
+  icon: string
+  stations?: string[] | null
+  source: string
+  sunrise?: string
+  sunriseEpoch?: number
+  sunset?: string
+  sunsetEpoch?: number
+  moonphase?: number
+  period?: string
+  relativeLabel?: string
+}
+
 export interface WeatherDay {
   datetime: string
   datetimeEpoch: number
@@ -68,7 +103,9 @@ export interface WeatherDay {
   icon: string
   stations?: string[] | null
   source: string
+  hours?: WeatherHour[]
 }
+
 
 export interface WeatherAlert {
   event: string
