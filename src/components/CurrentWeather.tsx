@@ -64,11 +64,19 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data }) => {
     const flattenHours = data.days.flatMap((d) => d.hours ?? [])
     const currentHourIndex = flattenHours.findIndex(f => f.datetimeEpoch === data.currentConditions.datetimeEpoch)
 
+    if (currentHourIndex < 24 || currentHourIndex > 47) {
+      return []
+    }
+
     const last24Hours = Math.max(0, currentHourIndex - 24)
     const next24Hours = Math.min(flattenHours.length, currentHourIndex + 24 + 1)
-    const newArr = flattenHours.slice(last24Hours, next24Hours)
+    const timeline = flattenHours.slice(last24Hours, next24Hours)
 
-    return newArr.map((d, idx) => {
+    if (timeline.length !== 49) {
+      return []
+    }
+
+    return timeline.map((d, idx) => {
       if (idx < 24) {
         return { ...d, period: 'history', relativeLabel: `${24 - idx}h ago` }
       } else if (idx === 24) {
@@ -191,7 +199,9 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data }) => {
         />
       </div>
 
-      <HourlyOutlook unit={unit} hours={hours} />
+      {hours.length && (
+        <HourlyOutlook unit={unit} hours={hours} />
+      )}
     </div>
   )
 }
