@@ -13,6 +13,7 @@ async function fetchWeatherByLocation(location: string) {
 
     } catch (error) {
         console.error('Failed to get data or data is invalid: ', error);
+        throw error
     }
 }
 

@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { type } from "arktype";
 import axios from "axios";
 
-const locationQuerySchema = type('string > 3')
+const locationQuerySchema = type('string')
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 
