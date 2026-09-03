@@ -26,7 +26,7 @@ const getLocationFromStorage = () => {
 
 function RootLayout() {
   const [activeLocation, setActiveLocation] = useState(getLocationFromStorage)
-  const [searchInput, setSearchInput] = useState('')
+  const [searchInput, setSearchInput] = useState(getLocationFromStorage)
 
   const { data, refetch, isLoading, isFetching, error } = useWeathers(activeLocation)
   const { detect, loading: isLocating } = useGeolocation()
@@ -69,9 +69,6 @@ function RootLayout() {
     detect({ onSuccess: handleSuccessDetectLocation, onError: (msg) => toast.error(msg) })
   }
 
-  const handleRefresh = () => refetch()
-
-
   useEffect(() => {
     try {
       const trimmed = activeLocation.trim()
@@ -96,7 +93,7 @@ function RootLayout() {
           searchInput={searchInput}
           onSearchChange={setSearchInput}
           onSearchSubmit={handleSearchSubmit}
-          onRefresh={handleRefresh}
+          onRefresh={refetch}
           onDetectLocation={handleDetectLocation}
           isFetching={isFetching}
           isLocating={isLocating}
@@ -110,7 +107,7 @@ function RootLayout() {
             <ErrorState
               error={error}
               location={activeLocation}
-              onRetry={handleRefresh}
+              onRetry={refetch}
               onDetectLocation={handleDetectLocation}
             />
           ) : data ? (
