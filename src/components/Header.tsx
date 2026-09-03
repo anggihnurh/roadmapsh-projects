@@ -8,6 +8,8 @@ interface HeaderProps {
   onSearchSubmit: () => void
   onDetectLocation: () => void
   onRefresh: () => void
+  isFetching?: boolean
+  isLocating?: boolean
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,9 +18,11 @@ export const Header: React.FC<HeaderProps> = ({
   onSearchSubmit,
   onDetectLocation,
   onRefresh,
+  isFetching = false,
+  isLocating = false,
 }) => {
   return (
-    <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4">
+    <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
       <div className="flex items-center gap-3">
         <div className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/20">
           <CloudSun className="size-5" />
@@ -39,6 +43,8 @@ export const Header: React.FC<HeaderProps> = ({
         onSearchSubmit={onSearchSubmit}
         onDetectLocation={onDetectLocation}
         onRefresh={onRefresh}
+        isFetching={isFetching}
+        isLocating={isLocating}
       />
     </header>
   )

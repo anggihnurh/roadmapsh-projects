@@ -1,6 +1,7 @@
 import { Separator } from '@/components/ui/separator'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query'
+import { RefreshCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { CurrentWeather } from './components/CurrentWeather'
@@ -31,7 +32,8 @@ function RootLayout() {
   const { detect, loading: isLocating } = useGeolocation()
   const queryClient = useQueryClient()
 
-  const isBusy = isLoading || isFetching || isLocating
+  const isInitialLoading = (isLoading || isFetching || isLocating) && !data
+  const isUpdating = (isFetching || isLocating) && Boolean(data)
 
   const handleSearchSubmit = () => {
     const trimmed = searchInput.trim()
@@ -81,6 +83,11 @@ function RootLayout() {
     }
   }, [activeLocation])
 
+  useEffect(() => {
+    if (error && data) {
+      toast.error(error instanceof Error ? error.message : 'Failed to update weather data')
+    }
+  }, [error, data])
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8 selection:bg-primary selection:text-primary-foreground relative overflow-hidden">
@@ -91,21 +98,36 @@ function RootLayout() {
           onSearchSubmit={handleSearchSubmit}
           onRefresh={handleRefresh}
           onDetectLocation={handleDetectLocation}
+          isFetching={isFetching}
+          isLocating={isLocating}
         />
         <Separator />
 
         <main className="w-full min-h-[400px]">
-          {isBusy ? (
+          {isInitialLoading ? (
             <WeatherSkeleton />
-          ) : error ? (
+          ) : error && !data ? (
             <ErrorState
               error={error}
               location={activeLocation}
               onRetry={handleRefresh}
               onDetectLocation={handleDetectLocation}
-            />) : data ? (
-              <CurrentWeather data={data} />
-            ) : (
+            />
+          ) : data ? (
+            <div className="relative">
+              {isUpdating && (
+                <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-card/90 backdrop-blur-md border border-border/70 text-xs text-muted-foreground px-3.5 py-1.5 rounded-full shadow-md animate-in fade-in zoom-in-95 duration-200 pointer-events-none whitespace-nowrap">
+                  <RefreshCw className="size-3.5 animate-spin text-primary" />
+                  <span className="font-medium">
+                    {isLocating ? 'Detecting location...' : 'Updating weather data...'}
+                  </span>
+                </div>
+              )}
+              <div className={`transition-opacity duration-300 ${isUpdating ? 'opacity-60 pointer-events-none' : 'opacity-100'}`}>
+                <CurrentWeather data={data} />
+              </div>
+            </div>
+          ) : (
             <EmptyState onDetectLocation={handleDetectLocation} />
           )}
         </main>

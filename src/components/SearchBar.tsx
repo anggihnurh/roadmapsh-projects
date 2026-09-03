@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { Search, MapPin, RefreshCw } from 'lucide-react'
+import { Search, MapPin, RefreshCw, Loader2 } from 'lucide-react'
 
 interface SearchBarProps {
   searchInput: string
@@ -10,6 +10,8 @@ interface SearchBarProps {
   onSearchSubmit: () => void
   onDetectLocation: () => void
   onRefresh?: () => void
+  isFetching?: boolean
+  isLocating?: boolean
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
@@ -18,6 +20,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   onSearchSubmit,
   onDetectLocation,
   onRefresh,
+  isFetching = false,
+  isLocating = false,
 }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -40,7 +44,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         />
       </div>
 
-      <Button type="submit">
+      <Button type="submit" disabled={isFetching || isLocating}>
         <Search data-icon="inline-start" />
         Search
       </Button>
@@ -54,13 +58,18 @@ export const SearchBar: React.FC<SearchBarProps> = ({
               type="button"
               aria-label="Detect current location"
               onClick={onDetectLocation}
+              disabled={isLocating || isFetching}
             >
-              <MapPin />
+              {isLocating ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <MapPin />
+              )}
             </Button>
           }
         />
         <TooltipContent>
-          <p>Detect Location</p>
+          <p>{isLocating ? 'Detecting location...' : 'Detect Location'}</p>
         </TooltipContent>
       </Tooltip>
 
@@ -73,13 +82,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
               type="button"
               aria-label="Refresh weather data"
               onClick={onRefresh}
+              disabled={isFetching || isLocating}
             >
-              <RefreshCw />
+              <RefreshCw className={isFetching ? 'animate-spin' : ''} />
             </Button>
           }
         />
         <TooltipContent>
-          <p>Refresh Weather</p>
+          <p>{isFetching ? 'Refreshing...' : 'Refresh Weather'}</p>
         </TooltipContent>
       </Tooltip>
     </form>
