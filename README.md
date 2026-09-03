@@ -27,6 +27,7 @@ Here's the list of projects completed so far. To check out the code for a specif
 | 🟢 Beginner | Single Page CV | [`single-page-cv`](../../tree/single-page-cv) | First project: Building a static CV page. |
 | 🟢 Beginner | Basic HTML Website | [`basic-html-website`](../../tree/basic-html-website) | Building a multi-page site using semantic HTML. |
 | 🟡 Intermediate | Quiz App | [`quiz-app`](../../tree/quiz-app) | An interactive quiz app with dynamic questions and state management. |
+| 🟡 Intermediate | Weather Web App | [`weather-web-app`](../../tree/weather-web-app) | Weather forecast app with 24h outlook, reverse geolocation, and schema validation. |
 | ... | *More projects coming soon* | ... | ... |
 
 *(I'll keep updating this list as I progress).*
@@ -35,7 +36,7 @@ Here's the list of projects completed so far. To check out the code for a specif
 
 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/username/roadmapsh-projects.git
+   git clone https://github.com/anggihnurh/roadmapsh-projects.git
    cd roadmapsh-projects
    ```
 
@@ -47,12 +48,14 @@ Here's the list of projects completed so far. To check out the code for a specif
 3. Switch to the branch of the project you want to check out:
    ```bash
    git checkout <branch-name>
-   # example: git checkout single-page-cv
+   # example: git checkout weather-web-app
    ```
 
 ---
 Happy coding! 💻✨
 
-https://roadmap.sh/projects/single-page-cv
-https://roadmap.sh/projects/basic-html-website
-https://roadmap.sh/projects/quiz-app
+- https://roadmap.sh/projects/single-page-cv
+- https://roadmap.sh/projects/basic-html-website
+- https://roadmap.sh/projects/quiz-app
+- https://roadmap.sh/projects/weather-app
+
